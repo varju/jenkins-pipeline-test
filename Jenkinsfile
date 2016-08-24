@@ -7,7 +7,7 @@ node {
 
     // docker.image('busybox').inside {
     stage "Test"
-    sh "exit 0"
+    sh "exit 1"
   // }
   } catch (error) {
     // Send an email to the developers who have committed recently, and to the person who requested the build
