@@ -25,5 +25,7 @@ node {
              body: "Build failed (see ${env.BUILD_URL}): ${error}"
     }
     throw error
+  } finally {
+    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: '', sendToIndividuals: true])
   }
 }
