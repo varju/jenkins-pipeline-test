@@ -4,6 +4,6 @@ node {
 
   docker.image('busybox').inside {
     stage "Test"
-    sh "echo hello"
+    sh "exit 1"
   }
 }
