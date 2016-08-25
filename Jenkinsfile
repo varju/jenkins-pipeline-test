@@ -6,9 +6,10 @@
 // - CloudBees Docker Pipeline (1.7)
 // - Email Extension Plugin (2.47)
 
-def sandboxDir = "/data"
-
+stage 'Setup'
 node {
+  def sandboxDir = "/data"
+
   emailHandler {
     wrap([$class: 'TimestamperBuildWrapper']) {
       docker.image('busybox').inside("--volume ${env.MESOS_SANDBOX}:/data") {
