@@ -39,7 +39,7 @@ node {
 
 def build() {
   stage "Build"
-  sh "exit 0"
+  sh "exit 1"
 }
 
 def test() {
