@@ -44,7 +44,7 @@ def emailHandler(Closure block) {
 
 def build() {
   stage "Build"
-  sh "exit 1"
+  sh "exit 0"
 }
 
 def test() {
