@@ -48,7 +48,7 @@ def emailHandler(Closure block) {
 
 // Gets a persistent sandbox directory that 
 def getSandboxDir() {
-  def path = "/mnt/mesos/sandbox"
+  def path = env.MESOS_SANDBOX
 }
 
 
@@ -61,10 +61,10 @@ def build() {
 
   sh "env"
   sh "mount"
-  sh "ls -aFl /mnt/mesos/sandbox/"
+  sh "ls -aFl ${env.MESOS_SANDBOX}"
   // sh "touch /mnt/mesos/sandbox/asdf.${env.BUILD_ID}"
-  sh "rm -f /mnt/mesos/sandbox/asdf*"
-  sh "df -h /mnt/mesos/sandbox"
+  sh "rm -f ${env.MESOS_SANDBOX}/asdf*"
+  sh "df -h ${env.MESOS_SANDBOX}/sandbox"
 
   sh "exit 0"
 }
