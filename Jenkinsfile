@@ -1,31 +1,39 @@
 #!/usr/bin/env groovy
 
+// Required plugins:
+// - Pipeline (2.2)
+// - Pipeline: Multibranch (2.8)
+// - CloudBees Docker Pipeline (1.7)
+// - Email Extension Plugin (2.47)
+
 node {
   try {
-    // stage "Prepare environment"
-    // checkout scm
-
-    // docker.image('busybox').inside {
-    stage "Test"
-    sh "exit 1"
-  // }
+    wrap([$class: 'TimestamperBuildWrapper']) {
+      docker.image('busybox').inside {
+        build()
+        test()
+        publish()
+      }
+    }
   } catch (error) {
-    // Send an email to the developers who have committed recently, and to the person who requested the build
-    def to = emailextrecipients([
-        [$class: 'CulpritsRecipientProvider'],
-        [$class: 'DevelopersRecipientProvider'],
-        [$class: 'RequesterRecipientProvider']
-    ])
-    if (to != null) {
-      echo "Email recipients: $to"
-    }
-    if (to != null && !to.isEmpty()) {
-        mail to: to,
-             subject: "[JENKINS] ${env.JOB_NAME} failed",
-             body: "Build failed (see ${env.BUILD_URL}): ${error}"
-    }
+    currentBuild.result = 'FAILURE'
     throw error
   } finally {
-    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: '', sendToIndividuals: true])
+    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'varju@blackboard.com', sendToIndividuals: true])
   }
+}
+
+def build() {
+  stage "Build"
+  echo "Hello"
+}
+
+def test() {
+  stage "Test"
+  echo "Hello"
+}
+
+def publish() {
+  stage "Publish"
+  echo "Hello"
 }
