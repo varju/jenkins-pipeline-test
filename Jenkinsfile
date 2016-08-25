@@ -6,6 +6,8 @@
 // - CloudBees Docker Pipeline (1.7)
 // - Email Extension Plugin (2.47)
 
+def sandboxDir = "/data"
+
 node {
   emailHandler {
     wrap([$class: 'TimestamperBuildWrapper']) {
@@ -44,12 +46,6 @@ def emailHandler(Closure block) {
     // TODO: This doesn't appear to be sending an email when failing builds recover
     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: to, sendToIndividuals: true])
   }
-}
-
-// Gets a persistent sandbox directory that 
-def sandboxDir() {
-  // def path = env.MESOS_SANDBOX
-  return "/data"
 }
 
 
