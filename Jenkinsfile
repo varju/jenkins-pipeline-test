@@ -8,8 +8,6 @@
 
 stage 'Setup'
 node {
-  def sandboxDir = "/data"
-
   emailHandler {
     wrap([$class: 'TimestamperBuildWrapper']) {
       docker.image('busybox').inside("--volume ${env.MESOS_SANDBOX}:/data") {
@@ -59,9 +57,9 @@ def build() {
 
   sh "env"
   sh "mount"
-  sh "ls -aFl $sandboxDir"
-  sh "touch $sandboxDir/asdf.${env.BUILD_ID}"
-  sh "rm -f $sandboxDir/asdf*"
+  sh "ls -aFl /data"
+  sh "touch /data/asdf.${env.BUILD_ID}"
+  sh "rm -f /data/asdf*"
   sh "df -h"
 
   sh "exit 0"
