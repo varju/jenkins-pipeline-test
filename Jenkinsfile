@@ -9,7 +9,7 @@
 node {
   emailHandler {
     wrap([$class: 'TimestamperBuildWrapper']) {
-      docker.image('busybox').inside("--volumes ${env.MESOS_SANDBOX}:/data") {
+      docker.image('busybox').inside("--volume ${env.MESOS_SANDBOX}:/data") {
         build()
         test()
         publish()
