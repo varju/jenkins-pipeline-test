@@ -6,6 +6,9 @@
 // - CloudBees Docker Pipeline (1.7)
 // - Email Extension Plugin (2.47)
 
+// TODO:
+// - only allow one build at a time per branch
+
 stage 'Setup'
 node {
   emailHandler {
