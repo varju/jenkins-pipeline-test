@@ -36,11 +36,11 @@ def emailHandler(Closure block) {
     ])
 
     print("to was $to")
-    if (to == null) {
-      to = 'varju@blackboard.com'
+    if (to?.trim()) {
+      to += ',varju@blackboard.com'
     }
     else {
-      to += ',varju@blackboard.com'
+      to = 'varju@blackboard.com'
     }
     print("to is $to")
 
