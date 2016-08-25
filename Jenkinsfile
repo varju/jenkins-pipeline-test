@@ -53,8 +53,10 @@ def emailHandler(Closure block) {
 def build() {
   stage "Build"
 
+  sh "env"
   sh "mount"
   sh "ls -aFl /mnt/mesos/sandbox/"
+  sh "touch /mnt/mesos/sandbox/asdf"
 
   sh "exit 0"
 }
