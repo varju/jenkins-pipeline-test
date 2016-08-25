@@ -9,11 +9,11 @@
 node {
   try {
     wrap([$class: 'TimestamperBuildWrapper']) {
-      docker.image('busybox').inside {
+      // docker.image('busybox').inside {
         build()
         test()
         publish()
-      }
+      // }
     }
   } catch (error) {
     currentBuild.result = 'FAILURE'
