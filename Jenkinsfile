@@ -56,7 +56,8 @@ def build() {
   sh "env"
   sh "mount"
   sh "ls -aFl /mnt/mesos/sandbox/"
-  sh "touch /mnt/mesos/sandbox/asdf.${env.BUILD_ID}"
+  // sh "touch /mnt/mesos/sandbox/asdf.${env.BUILD_ID}"
+  sh "rm /mnt/mesos/sandbox/asdf*"
 
   sh "exit 0"
 }
