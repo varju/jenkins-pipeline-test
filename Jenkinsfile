@@ -7,7 +7,7 @@
 // - Email Extension Plugin (2.47)
 
 node {
-  try {
+  emailHandler {
     wrap([$class: 'TimestamperBuildWrapper']) {
       // docker.image('busybox').inside {
         build()
@@ -15,25 +15,30 @@ node {
         publish()
       // }
     }
+  }
+}
+
+def emailHandler(Closure block) {
+  try {
+    block()
   } catch (error) {
     currentBuild.result = 'FAILURE'
     throw error
   } finally {
-    // def to = emailextrecipients([
-    //     [$class: 'CulpritsRecipientProvider'],   // committers since last successful build
-    //     [$class: 'DevelopersRecipientProvider'], // committers since previous build
-    //     [$class: 'RequesterRecipientProvider']   // user who triggered build (if manually built)
-    // ])
-    // print("to was ${to}")
-    // if (to == null) {
-    //   to = 'varju@blackboard.com'
-    // }
-    // else {
-    //   to += ',varju@blackboard.com'
-    // }
-    // print("to is ${to}")
+    def to = emailextrecipients([
+        [$class: 'CulpritsRecipientProvider'],   // committers since last successful build
+        [$class: 'DevelopersRecipientProvider'], // committers since previous build
+        [$class: 'RequesterRecipientProvider']   // user who triggered build (if manually built)
+    ])
+    print("to was ${to}")
+    if (to == null) {
+      to = 'varju@blackboard.com'
+    }
+    else {
+      to += ',varju@blackboard.com'
+    }
 
-    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'varju@blackboard.com', sendToIndividuals: true])
+    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: to, sendToIndividuals: true])
   }
 }
 
