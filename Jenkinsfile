@@ -19,13 +19,20 @@ node {
     currentBuild.result = 'FAILURE'
     throw error
   } finally {
+    def to = emailextrecipients([
+        [$class: 'CulpritsRecipientProvider'],
+        [$class: 'DevelopersRecipientProvider'],
+        [$class: 'RequesterRecipientProvider']
+    ])
+    print("to is ${to}")
+
     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'varju@blackboard.com', sendToIndividuals: true])
   }
 }
 
 def build() {
   stage "Build"
-  echo "Hello"
+  sh "exit 1"
 }
 
 def test() {
