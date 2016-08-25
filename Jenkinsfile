@@ -19,20 +19,21 @@ node {
     currentBuild.result = 'FAILURE'
     throw error
   } finally {
-    def to = emailextrecipients([
-        [$class: 'CulpritsRecipientProvider'],   // committers since last successful build
-        [$class: 'DevelopersRecipientProvider'], // committers since previous build
-        [$class: 'RequesterRecipientProvider']   // user who triggered build (if manually built)
-    ])
-    print("to is ${to}")
-    if (to == null) {
-      to = 'varju@blackboard.com'
-    }
-    else {
-      to += ',varju@blackboard.com'
-    }
+    // def to = emailextrecipients([
+    //     [$class: 'CulpritsRecipientProvider'],   // committers since last successful build
+    //     [$class: 'DevelopersRecipientProvider'], // committers since previous build
+    //     [$class: 'RequesterRecipientProvider']   // user who triggered build (if manually built)
+    // ])
+    // print("to was ${to}")
+    // if (to == null) {
+    //   to = 'varju@blackboard.com'
+    // }
+    // else {
+    //   to += ',varju@blackboard.com'
+    // }
+    // print("to is ${to}")
 
-    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: to, sendToIndividuals: true])
+    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'varju@blackboard.com', sendToIndividuals: true])
   }
 }
 
