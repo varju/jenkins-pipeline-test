@@ -52,6 +52,9 @@ def emailHandler(Closure block) {
 
 def build() {
   stage "Build"
+
+  sh "mount"
+
   sh "exit 0"
 }
 
