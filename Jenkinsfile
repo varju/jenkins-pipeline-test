@@ -20,12 +20,17 @@ node {
     throw error
   } finally {
     def to = emailextrecipients([
-        [$class: 'CulpritsRecipientProvider'],
-        [$class: 'DevelopersRecipientProvider'],
-        [$class: 'RequesterRecipientProvider']
+        [$class: 'CulpritsRecipientProvider'],   // committers since last successful build
+        [$class: 'DevelopersRecipientProvider'], // committers since previous build
+        [$class: 'RequesterRecipientProvider']   // user who triggered build (if manually built)
     ])
     print("to is ${to}")
-    to.push('varju@blackboard.com')
+    if (to == null) {
+      to = 'varju@blackboard.com'
+    }
+    else {
+      to += ',varju@blackboard.com'
+    }
 
     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: to, sendToIndividuals: true])
   }
