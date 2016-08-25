@@ -40,6 +40,7 @@ def emailHandler(Closure block) {
     }
     print("to is $to")
 
+    // TODO: This does not detect committers for the first build of a feature branch
     // TODO: This doesn't appear to be sending an email when failing builds recover
     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: to, sendToIndividuals: true])
   }
