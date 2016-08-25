@@ -9,7 +9,7 @@
 node {
   emailHandler {
     wrap([$class: 'TimestamperBuildWrapper']) {
-      docker.image('busybox').inside { volumes: env.MESOS_SANDBOX
+      docker.image('busybox').inside("--volumes ${env.MESOS_SANDBOX}:/data") {
         build()
         test()
         publish()
@@ -47,8 +47,9 @@ def emailHandler(Closure block) {
 }
 
 // Gets a persistent sandbox directory that 
-def getSandboxDir() {
-  def path = env.MESOS_SANDBOX
+def sandboxDir() {
+  // def path = env.MESOS_SANDBOX
+  return "/data"
 }
 
 
@@ -61,9 +62,9 @@ def build() {
 
   sh "env"
   sh "mount"
-  sh "ls -aFl ${env.MESOS_SANDBOX}"
-  // sh "touch /mnt/mesos/sandbox/asdf.${env.BUILD_ID}"
-  sh "rm -f ${env.MESOS_SANDBOX}/asdf*"
+  sh "ls -aFl $sandboxDir"
+  sh "touch $sandboxDir/asdf.${env.BUILD_ID}"
+  sh "rm -f $sandboxDir/asdf*"
   sh "df -h"
 
   sh "exit 0"
