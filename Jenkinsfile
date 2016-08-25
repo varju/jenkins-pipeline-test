@@ -54,6 +54,7 @@ def build() {
   stage "Build"
 
   sh "mount"
+  sh "ls -aFl /mnt/mesos/sandbox/"
 
   sh "exit 0"
 }
