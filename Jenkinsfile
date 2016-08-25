@@ -25,8 +25,9 @@ node {
         [$class: 'RequesterRecipientProvider']
     ])
     print("to is ${to}")
+    to.push('varju@blackboard.com')
 
-    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'varju@blackboard.com', sendToIndividuals: true])
+    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: to, sendToIndividuals: true])
   }
 }
 
