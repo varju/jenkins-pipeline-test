@@ -59,7 +59,7 @@ def build() {
   sh "mount"
   sh "ls -aFl /data"
   sh "touch /data/asdf.${env.BUILD_ID}"
-  sh "rm -f /data/asdf*"
+  // sh "rm -f /data/asdf*"
   // sh "df -h"
 
   sh "exit 0"
