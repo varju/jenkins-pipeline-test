@@ -5,18 +5,18 @@
 // - Pipeline: Multibranch (2.8)
 // - CloudBees Docker Pipeline (1.7)
 // - Email Extension Plugin (2.47)
-
-// TODO:
-// - only allow one build at a time per branch
+// - Lockable Resources (1.10)
 
 stage 'Setup'
 node {
   emailHandler {
     wrap([$class: 'TimestamperBuildWrapper']) {
-      docker.image('busybox').inside("--volume ${env.MESOS_SANDBOX}:/data") {
-        build()
-        test()
-        publish()
+      lock(env.JOB_NAME) { // only allow one build per branch
+        docker.image('busybox').inside("--volume ${env.MESOS_SANDBOX}:/data") {
+          build()
+          test()
+          publish()
+        }
       }
     }
   }
